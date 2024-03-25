@@ -3,6 +3,7 @@ from display import Window, Line, Point
 class Cell():
     
     def __init__(self, win : Window) -> None:
+        self.visited = False
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -47,6 +48,7 @@ class Cell():
             fill_color = "white"
         top_wall = Line(Point(self._x2, self._y1), Point(self._x1, self._y1))
         self._win.draw_line(line=top_wall, fill_color=fill_color)
+      
         
     def draw_move(self, cell_dest, undo=False):
         def find_center(cell : Cell):               
