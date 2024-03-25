@@ -2,7 +2,7 @@ from display import Window, Line, Point
 
 class Cell():
     
-    def __init__(self, win) -> None:
+    def __init__(self, win : Window) -> None:
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -32,3 +32,17 @@ class Cell():
             top_wall = Line(Point(self._x2, self._y1), Point(self._x1, self._y1))
             self._win.draw_line(line=top_wall, fill_color="black")
         
+    def draw_move(self, cell_dest, undo=False):
+        def find_center(cell : Cell):               
+            center_x = ((cell._x2 - cell._x1) / 2) + cell._x1
+            center_y = ((cell._y2 - cell._y1) / 2) + cell._y1
+            return center_x, center_y
+        if undo:
+            fill_color = "red"
+        else:
+            fill_color = "grey"
+        
+        path = Line(Point(find_center(self)[0], find_center(self)[1]), Point(find_center(cell_dest)[0], find_center(cell_dest)[1]))
+        
+        self._win.draw_line(line=path, fill_color=fill_color)
+    
