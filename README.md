@@ -29,8 +29,6 @@ Usage
 
     python main.py
 
-    Use code with caution.
-
     Customization: Adjust parameters within the main.py file to modify maze size, generation seed, and other aspects.
 
 Code Structure
