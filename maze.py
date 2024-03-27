@@ -59,28 +59,32 @@ class Maze():
             
             if i + 1 < self.num_rows and not self._cells[i+1][j].visited:
                 to_visit.append((i+1, j))
-                self._cells[i][j].has_bottom_wall = False
-                self._cells[i + 1][j].has_top_wall = False
-            elif i > 0 and not self._cells[i-1][j].visited:
-                to_visit.append((i-1, j))
-                self._cells[i][j].has_top_wall = False
-                self._cells[i - 1][j].has_bottom_wall = False                
-            elif j + 1 < self.num_cols and not self._cells[i][j+1].visited:
+            if i > 0 and not self._cells[i-1][j].visited:
+                to_visit.append((i-1, j))             
+            if j + 1 < self.num_cols and not self._cells[i][j+1].visited:
                 to_visit.append((i, j+1))
-                self._cells[i][j].has_right_wall = False
-                self._cells[i][j+1].has_left_wall = False     
-            elif j > 0 and not self._cells[i][j-1].visited:
+            if j > 0 and not self._cells[i][j-1].visited:
                 to_visit.append((i, j-1))
-                self._cells[i][j].has_left_wall = False
-                self._cells[i][j-1].has_right_wall = False     
-            
-             
+
             if len(to_visit) == 0:
                 self._draw_cell(i, j)
                 return
-            
-            chosen = random.choice(to_visit)
-            print(chosen)
 
+            chosen = random.choice(to_visit)
+            
+            if chosen[0] == i + 1:
+                self._cells[i][j].has_right_wall = False
+                self._cells[i + 1][j].has_left_wall = False
+            elif chosen[0] == i - 1:
+                self._cells[i][j].has_left_wall = False
+                self._cells[i - 1][j].has_right_wall = False   
+            elif chosen[1] == j + 1:
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[i][j+1].has_top_wall = False   
+            elif chosen[1] == j - 1:
+                self._cells[i][j].has_top_wall = False
+                self._cells[i][j-1].has_bottom_wall = False    
+                 
             self._cells[i][j].draw_move(self._cells[chosen[0]][chosen[1]])
+            
             self._break_walls_r(chosen[0], chosen[1])
